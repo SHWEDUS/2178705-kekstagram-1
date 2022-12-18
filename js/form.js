@@ -1,12 +1,12 @@
 import { isEscape } from './util.js';
 import { validateForm } from './validate-form.js';
 
-const formSelectedPhoto = document.querySelector('#upload-select-image');
-const uploadFile = document.querySelector('#upload-file');
-const valueUploadFile = uploadFile.getAttribute('value');
+const formPicture = document.querySelector('#upload-select-image');
+const inputImage = document.querySelector('#upload-file');
+const valueInputImage = inputImage.getAttribute('value');
 const body = document.querySelector('body');
-const overlay = document.querySelector('.img-upload__overlay');
-const uploadFileClose = document.querySelector('.img-upload__cancel');
+const form = document.querySelector('.img-upload__overlay');
+const formClose = document.querySelector('.img-upload__cancel');
 const hashtags = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
 const submit = document.querySelector('#upload-submit');
@@ -14,13 +14,13 @@ const imgPreview = document.querySelector('.img-upload__preview').querySelector(
 
 
 const resetFormInput = () => {
-  uploadFile.value = valueUploadFile;
+  inputImage.value = valueInputImage;
   description.value = '';
   hashtags.value = '';
 };
 
 const closeForm = () => {
-  overlay.classList.add('hidden');
+  form.classList.add('hidden');
   body.classList.remove('modal-open');
   resetFormInput();
   // eslint-disable-next-line no-use-before-define
@@ -34,19 +34,17 @@ const closeFormByEsc = (evt) => {
   }
 };
 
-const addEvtToForm = () => {
-  uploadFileClose.addEventListener('click', closeForm);
+const  addEvtToForm = () => {
+  formClose.addEventListener('click', closeForm);
   document.addEventListener('keydown', closeFormByEsc);
-  formSelectedPhoto.addEventListener('submit', validateForm);
+  formPicture.addEventListener('submit', validateForm);
 };
 
-uploadFile.addEventListener('change', function () {
+inputImage.addEventListener('change', function () {
   if(this.value) {
     body.classList.add('modal-open');
-    overlay.classList.remove('hidden');
+    form.classList.remove('hidden');
     addEvtToForm();
-    const newFile = uploadFile.files[0];
-    imgPreview.src = URL.createObjectURL(newFile);
   }
 });
 
@@ -56,9 +54,9 @@ const removePost = (message) => {
 
 
 const removeEventListenerForm = () => {
-  uploadFileClose.removeEventListener('clock', closeForm);
+  formClose.removeEventListener('clock', closeForm);
   document.removeEventListener('keydown', closeFormByEsc);
-  formSelectedPhoto.removeEventListener('submit', validateForm);
+  formPicture.removeEventListener('submit', validateForm);
 };
 
 const getMessage = () => {
@@ -68,13 +66,13 @@ const getMessage = () => {
   return message;
 };
 
-const blockButtonSubmit = () => {
+const blockButton = () => {
   submit.disabled = true;
   // eslint-disable-next-line no-global-assign
   postMessage = getMessage();
 };
 
-const unblockButtonSubmit = () => {
+const unblockButton = () => {
   submit.disabled = false;
   removePost(postMessage);
 };
@@ -118,4 +116,4 @@ const failPost = () => {
   crateMessage(true);
 };
 
-export {imgPreview, blockButtonSubmit, successPost, failPost, unblockButtonSubmit};
+export {imgPreview, blockButton, successPost, failPost, unblockButton};

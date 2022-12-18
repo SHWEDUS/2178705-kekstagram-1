@@ -35,5 +35,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-
 export {getRandomNumber, isEscape, debounce, getRandomElementsArray};
